@@ -16,5 +16,6 @@ routes.use(authMiddleware);
 
 routes.get('/students', StudentController.index);
 routes.post('/students', StudentValidator.store, StudentController.store);
+routes.put('/students/:id', StudentValidator.update, StudentController.update);
 
 export default routes;
