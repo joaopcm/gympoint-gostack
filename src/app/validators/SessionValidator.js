@@ -3,12 +3,10 @@ import * as Yup from 'yup';
 class SessionValidator {
   async store(request, response, next) {
     const schema = Yup.object().shape({
-      email: Yup.string('Email should be a string').required(
-        'Email is required'
-      ),
-      password: Yup.string('Password should be a string').required(
-        'Password is required'
-      ),
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string().required(),
     });
 
     try {
