@@ -23,10 +23,10 @@ class StudentValidator {
     try {
       await schema.validate(request.body);
 
-      const studentExists = await Student.findOne({
+      const emailAlreadyInUse = await Student.findOne({
         where: { email: request.body.email },
       });
-      if (studentExists)
+      if (emailAlreadyInUse)
         return response.status(401).json({ error: 'Student already exists' });
 
       return next();
