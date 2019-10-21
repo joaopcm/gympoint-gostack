@@ -12,8 +12,8 @@ class SessionValidator {
     try {
       await schema.validate(request.body);
       return next();
-    } catch (error) {
-      return response.status(401).json({ error: error.message });
+    } catch ({ errors }) {
+      return response.status(401).json({ errors });
     }
   }
 }

@@ -7,9 +7,8 @@ class StudentController {
   }
 
   async store(request, response) {
-    const { name, email, age, weigth, height } = request.body;
-    const student = await Student.create({ name, email, age, weigth, height });
-    return response.json(student);
+    const student = await Student.create(request.body);
+    return response.status(201).json(student);
   }
 
   async update(request, response) {
@@ -17,7 +16,7 @@ class StudentController {
     const { name, email, age, weigth, height } = await student.update(
       request.body
     );
-    response.status(201).json({ name, email, age, weigth, height });
+    response.json({ name, email, age, weigth, height });
   }
 }
 

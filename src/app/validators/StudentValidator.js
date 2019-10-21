@@ -21,7 +21,9 @@ class StudentValidator {
     });
 
     try {
-      await schema.validate(request.body);
+      await schema.validate(request.body, {
+        abortEarly: false,
+      });
 
       const emailAlreadyInUse = await Student.findOne({
         where: { email: request.body.email },
@@ -30,8 +32,8 @@ class StudentValidator {
         return response.status(401).json({ error: 'Student already exists' });
 
       return next();
-    } catch (error) {
-      return response.status(401).json({ error: error.message });
+    } catch ({ errors }) {
+      return response.status(401).json({ errors });
     }
   }
 
@@ -45,7 +47,9 @@ class StudentValidator {
     });
 
     try {
-      await schema.validate(request.body);
+      await schema.validate(request.body, {
+        abortEarly: false,
+      });
 
       const { id } = request.params;
 
@@ -69,8 +73,8 @@ class StudentValidator {
       }
 
       return next();
-    } catch (error) {
-      return response.status(401).json({ error: error.message });
+    } catch ({ errors }) {
+      return response.status(401).json({ errors });
     }
   }
 }
