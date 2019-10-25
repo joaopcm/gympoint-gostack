@@ -1,4 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
+import { differenceInCalendarDays } from 'date-fns';
 
 class Student extends Model {
   static init(sequelize) {
@@ -6,7 +7,13 @@ class Student extends Model {
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
-        age: Sequelize.INTEGER,
+        birth: Sequelize.DATE,
+        age: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return this.calculateAge();
+          }
+        },
         weigth: Sequelize.FLOAT,
         height: Sequelize.FLOAT,
       },
@@ -14,6 +21,14 @@ class Student extends Model {
     );
 
     return this;
+  }
+
+  calculateAge() {
+    const age = Math.floor(
+      differenceInCalendarDays(new Date(), this.birth) / 365.25
+    );
+
+    return `${age} anos`;
   }
 }
 
